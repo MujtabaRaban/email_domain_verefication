@@ -126,12 +126,3 @@ email-domain-verification/
 ├── package.json              
 └── README.md
 └── tsconfig.json                 
-
-
-Support
-
-If you encounter any issues:
-
-1. Ensure all API keys and database connection strings are correctly set
-2. Verify that Bun is properly installed
-3. Check that all dependencies are installed with bun install
