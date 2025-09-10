@@ -50,6 +50,8 @@ Resend API Key
 2. Navigate to the API Keys section in your dashboard
 3. Create a new API key and copy it to your .env file
 
+# important note :   since we are using the free version we can't create a domain that allow us to use any email with edu but we can use the one that we create an account with in resend.com by add it on the Audience -->add contacts --> paste this : onboarding@resend.dev .
+
 Neon Database Connection
 
 1. Sign up at Neon Console
@@ -83,8 +85,8 @@ Usage
    · Enter a valid email address
    · The system will verify the domain and send a verification email
 2. Sign In:
-   · Visit the sign-in page
-   · Enter your registered email address that you created in resend.com          # little note since we are using the free version we can't create a domain that allow us to use any email with edu but we can use the one that we create an account with in resend.com by add it on the Audience -->add contacts --> paste this : onboarding@resend.dev .
+   · Visit the sign-in page                                                      
+   · Enter your registered email address that you created in resend.com         
 
    · The system will validate your email and authenticate you
 
@@ -118,7 +120,7 @@ email-domain-verification/
 |       └── index.ts                        # Start the server
 │   
 |── drizzle/                                #intract with the database, provide type safety 
-│   
+|── screen_shot/                            # screenshots for the app
 └── .env.example
 └── bun.lock  
 └── driszzle.config.ts                      
@@ -126,3 +128,4 @@ email-domain-verification/
 ├── package.json              
 └── README.md
 └── tsconfig.json                 
+
