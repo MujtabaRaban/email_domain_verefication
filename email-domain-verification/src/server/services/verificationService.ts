@@ -6,7 +6,7 @@ import { auditService } from './auditService';
 import { CODE_EXPIRY_MINUTES } from '../config';
 import crypto from 'crypto';
 
-// Export individual functions
+// Export functions
 export async function createVerificationCode(email: string): Promise<string> {
   const code = String(Math.floor(100000 + Math.random() * 900000));
   const codeHash = hashCode(code);
