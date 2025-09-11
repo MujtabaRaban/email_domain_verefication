@@ -44,6 +44,8 @@ RESEND_API_KEY=your_resend_api_key_here
 DATABASE_URL=your_neon_connection_string_here
 CODE_HASH_SECRET=your_secret_code_here
 APP_BASE_URL= your_app_base_url_here
+BETTER_AUTH_SECRET="d1569ca982152ae25b66403efada99853e285019a1af6b4ac5985a56b9853705"
+BETTER_AUTH_URL="http://localhost:3000" # Your APP URL
 
 
 
@@ -99,43 +101,5 @@ Usage
    · Enter your registered email address that you created in resend.com         
    · The system will validate your email and authenticate you
    . the email will be added under emails table if the process success
-
-Project Structure
-
-
-email-domain-verification/
-├── src/
-│   │── db/
-│   |   └── index.ts      # initialize a neon client 
-│   |   └── schema.ts     # create the tables              
-│   |
-|   |
-|   ├── server/ 
-│       │── routes/ 
-│       |   └── index.ts                    # Mount the API routes
-|       |   └── emailRoutes.ts              # implement the email API routes
-|       |   └── verificationRoutes.ts       # implement the verificatio API routes
-|       |
-|       │── services/
-│       |   └── auditService.ts             # implement the log event 
-|       |   └── emailService.ts             
-|       |   └── verificationService.ts      
-|       |
-│       │── utils/
-│       |   └── crypto.ts                   # implement the hashcode 
-|       |   └── rateLimit.ts                
-|       |   └── validation.ts              
-|       |
-|       └── config.ts                      
-|       └── index.ts                        # Start the server
-│   
-|── drizzle/                                #intract with the database, provide type safety 
-|── screen_shot/                            # screenshots for the app
-└── .env.example
-└── bun.lock  
-└── driszzle.config.ts                      
-├── .env                     
-├── package.json              
-└── README.md
-└── tsconfig.json                 
+         
 
