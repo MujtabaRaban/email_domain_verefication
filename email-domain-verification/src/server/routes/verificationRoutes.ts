@@ -1,8 +1,7 @@
 // routes/verificationRoutes.ts
 import { Hono } from "hono";
 import { auth } from "../../../auth";       // server-side Better Auth instance
-import { db } from "../../db";                // Drizzle DB instance
-import { audit_events } from "../../db/schema"; // Audit table schema
+
 
 export const verificationRoutes = new Hono();
 
