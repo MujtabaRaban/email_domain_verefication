@@ -1,16 +1,4 @@
-import { pgTable, timestamp, text, uuid, boolean, jsonb,varchar } from "drizzle-orm/pg-core";
-
-import { sql } from "drizzle-orm";
-
-
-
-export const audit_events = pgTable("audit_events", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  email: text("email").notNull(),
-  event_type: text("event_type").notNull(), // REQUESTED, SENT, CONFIRMED, FAILED
-  metadata: jsonb("metadata"),
-  created_at: timestamp("created_at").defaultNow().notNull(),
-});
+import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -60,18 +48,14 @@ export const account = pgTable("account", {
     .notNull(),
 });
 
-
 export const verification = pgTable("verification", {
   id: text("id").primaryKey(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
-  type: text("type").default("sign-in").notNull(), // ✅ default value prevents NULL errors
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
-    .$onUpdate(() => new Date())
+    .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
-
-

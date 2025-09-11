@@ -8,6 +8,55 @@
       "when": 1757287551965,
       "tag": "0000_medical_risque",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757582024564,
+      "tag": "0001_huge_stephen_strange",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757582906243,
+      "tag": "0002_ordinary_kate_bishop",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1757583220510,
+      "tag": "0003_skinny_masque",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1757584200490,
+      "tag": "0004_pretty_ben_grimm",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1757584394764,
+      "tag": "0005_rainy_frightful_four",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1757584524518,
+      "tag": "0006_superb_zeigeist",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1757586473580,
+      "tag": "0007_great_redwing",
+      "breakpoints": true
     }
   ]
 }

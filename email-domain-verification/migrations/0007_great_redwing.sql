@@ -1,0 +1,1 @@
+ALTER TABLE "audit_events" ALTER COLUMN "email" SET NOT NULL;
