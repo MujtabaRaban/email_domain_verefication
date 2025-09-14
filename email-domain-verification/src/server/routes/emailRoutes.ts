@@ -24,6 +24,12 @@ emailRoutes.post("/", async (c) => {
   if (checkClientRateLimit(ip, ipRateLimit)) {
     return c.json({ ok: false, error: "Too many requests from this IP. Try again later." }, 429);
   }
+  // Before sending OTP
+await db.insert(audit_events).values({
+  email,
+  event_type: "REQUESTED",
+  metadata: { type: "sign-in" },
+});
 
   // Proceed with sending OTP
   const result = await auth.api.sendVerificationOTP({

@@ -1,12 +1,10 @@
-// routes/verificationRoutes.ts
 import { Hono } from "hono";
-import { auth } from "../../../auth";       // server-side Better Auth instance
-
+import { auth } from "../../../auth";
+import { db } from "../../db";
+import { audit_events } from "../../db/schema";
+import { checkClientRateLimit, emailRateLimit, ipRateLimit } from "../utils/rateLimit";
 
 export const verificationRoutes = new Hono();
-
-// routes/verificationRoutes.ts
-import { checkClientRateLimit, emailRateLimit, ipRateLimit } from "../utils/rateLimit";
 
 verificationRoutes.post("/", async (c) => {
   const ip = c.req.header("x-forwarded-for") || c.req.header("cf-connecting-ip") || "unknown";
@@ -31,9 +29,20 @@ verificationRoutes.post("/", async (c) => {
   });
 
   if (!result || !("user" in result)) {
+    await db.insert(audit_events).values({
+      email,
+      event_type: "FAILED",
+      metadata: { reason: "Invalid or expired OTP" },
+    });
+
     return c.json({ ok: false, error: "Invalid or expired OTP" }, 400);
   }
 
+  await db.insert(audit_events).values({
+    email,
+    event_type: "CONFIRMED",
+    metadata: { userId: result.user.id },
+  });
+
   return c.json({ ok: true, user: result.user });
 });
-
