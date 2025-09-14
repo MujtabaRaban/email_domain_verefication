@@ -23,7 +23,7 @@ verificationRoutes.post("/", async (c) => {
     return c.json({ ok: false, error: "Too many attempts from this IP. Try again later." }, 429);
   }
 
-  // Proceed with OTP verification
+ try {
   const result = await auth.api.signInEmailOTP({
     body: { email, otp: code },
   });
@@ -45,4 +45,20 @@ verificationRoutes.post("/", async (c) => {
   });
 
   return c.json({ ok: true, user: result.user });
+} catch (err: any) {
+  // Check for INVALID_OTP under err.body
+  if (err?.body?.code === "INVALID_OTP") {
+    await db.insert(audit_events).values({
+      email,
+      event_type: "FAILED",
+      metadata: { reason: "Invalid or expired OTP" },
+    });
+
+    return c.json({ ok: false, error: "Invalid or expired OTP" }, 400);
+  }
+
+  console.error("Unexpected error:", err);
+  return c.json({ ok: false, error: "Network error. Please try again." }, 500);
+}
+
 });

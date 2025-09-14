@@ -6,7 +6,7 @@ import { neon } from "@neondatabase/serverless";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "./src/db/schema"; 
 import { resend } from "./src/resend";
-import bcrypt from "bcryptjs";
+
 
 
 const sql = neon(process.env.DATABASE_URL!);
