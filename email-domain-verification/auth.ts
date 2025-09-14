@@ -22,6 +22,8 @@ export const auth = betterAuth({
       overrideDefaultEmailVerification: true,
       otpLength: 6,
       expiresIn: 600, // 10 minutes
+
+      storeOTP: "hashed", 
       
       
       async sendVerificationOTP({ email, otp, type }) {
