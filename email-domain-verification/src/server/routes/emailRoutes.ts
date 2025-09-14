@@ -1,9 +1,13 @@
-// routes/emailRoutes.ts
 import { Hono } from "hono";
 import { auth } from "../../../auth";
 import { db } from "../../db";
 import { audit_events } from "../../db/schema";
-import { emailRateLimit, ipRateLimit, checkClientRateLimit } from "../utils/rateLimit";
+import { 
+  checkClientRateLimit, 
+  emailSendRateLimit, 
+  ipRateLimit 
+} from "../utils/rateLimit";
+import { RATE_LIMIT_WINDOW, MAX_SEND_EMAIL_REQUESTS } from "../config";
 
 export const emailRoutes = new Hono();
 
@@ -15,21 +19,22 @@ emailRoutes.post("/", async (c) => {
     return c.json({ ok: false, error: "Please use a valid .edu email" }, 400);
   }
 
-  // ✅ Rate-limit by email
-  if (checkClientRateLimit(email, emailRateLimit)) {
-    return c.json({ ok: false, error: "Too many requests for this email. Try again later." }, 429);
+  // ✅ Rate-limit by email for sending OTP
+  if (checkClientRateLimit(email, emailSendRateLimit, MAX_SEND_EMAIL_REQUESTS, RATE_LIMIT_WINDOW)) {
+    return c.json({ ok: false, error: "Too many OTP requests. Try again later." }, 429);
   }
 
   // ✅ Rate-limit by IP
-  if (checkClientRateLimit(ip, ipRateLimit)) {
+  if (checkClientRateLimit(ip, ipRateLimit, MAX_SEND_EMAIL_REQUESTS, RATE_LIMIT_WINDOW)) {
     return c.json({ ok: false, error: "Too many requests from this IP. Try again later." }, 429);
   }
-  // Before sending OTP
-await db.insert(audit_events).values({
-  email,
-  event_type: "REQUESTED",
-  metadata: { type: "sign-in" },
-});
+
+  // Log OTP request
+  await db.insert(audit_events).values({
+    email,
+    event_type: "REQUESTED",
+    metadata: { type: "sign-in" },
+  });
 
   // Proceed with sending OTP
   const result = await auth.api.sendVerificationOTP({
